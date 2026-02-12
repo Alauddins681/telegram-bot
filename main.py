@@ -6,11 +6,28 @@ import json
 import threading
 import os
 from io import BytesIO
+BOT_ACTIVE = True
+ADMIN_ID = 953030386
 
 # --- CONFIGURATION ---
 # Use environment variable if available, else use hardcoded token
 API_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '7927527224:AAEWk-HXpsTnnus9s6T1ZiZRPVpM_oA2_a8')
 bot = telebot.TeleBot(API_TOKEN)
+BOT_ACTIVE = True
+
+@bot.message_handler(commands=['off'])
+def stop_bot(message):
+    global BOT_ACTIVE
+    if message.from_user.id == ADMIN_ID:
+        BOT_ACTIVE = False
+        bot.reply_to(message, "🛑 Bot OFF ho gaya")
+
+@bot.message_handler(commands=['on'])
+def start_bot(message):
+    global BOT_ACTIVE
+    if message.from_user.id == ADMIN_ID:
+        BOT_ACTIVE = True
+        bot.reply_to(message, "✅ Bot ON ho gaya")
 
 # Store user data
 user_sessions = {}
@@ -198,6 +215,8 @@ def handle_files(m):
 
 @bot.message_handler(func=lambda m: True)
 def handle_text(m):
+    if not BOT_ACTIVE:
+        return
     chat_id = m.chat.id
     if chat_id in user_sessions and 'cookie' in user_sessions[chat_id]:
         codes = [x.strip() for x in m.text.split() if x.strip()]
