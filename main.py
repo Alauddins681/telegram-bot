@@ -82,6 +82,9 @@ def run_protection_cycle(chat_id):
     except: pass
 
     while True:
+        if not BOT_ACTIVE:
+            time.sleep(5)
+            continue
         if chat_id not in user_sessions: break
         
         cookie = user_sessions[chat_id].get('cookie')
