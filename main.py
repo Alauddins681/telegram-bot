@@ -29,10 +29,19 @@ def start_bot(message):
     if message.from_user.id == ADMIN_ID:
         BOT_ACTIVE = True
         bot.reply_to(message, "✅ Bot ON ho gaya")
-        @bot.message_handler(commands=['kill'])
-def kill_bot(message):
+        @bot.message_handler(commands=['on'])
+def start_bot(message):
+    global BOT_ACTIVE
     if message.from_user.id == ADMIN_ID:
-        bot.reply_to(message, "💀 Server stopping...")
+        BOT_ACTIVE = True
+        bot.reply_to(message, "✅ Bot ON")
+
+@bot.message_handler(commands=['kill'])
+def kill_bot(message):
+    global BOT_ACTIVE
+    if message.from_user.id == ADMIN_ID:
+        BOT_ACTIVE = False
+        bot.reply_to(message, "💀 Server stopped")
 
 # Store user data
 user_sessions = {}
