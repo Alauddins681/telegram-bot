@@ -33,7 +33,6 @@ def start_bot(message):
 def kill_bot(message):
     if message.from_user.id == ADMIN_ID:
         bot.reply_to(message, "💀 Server stopping...")
-        sys.exit()
 
 # Store user data
 user_sessions = {}
