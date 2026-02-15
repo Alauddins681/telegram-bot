@@ -5,7 +5,7 @@ import time
 import json
 import threading
 import os
-imort sys
+import sys
 from io import BytesIO
 BOT_ACTIVE = True
 ADMIN_ID = 953030386
