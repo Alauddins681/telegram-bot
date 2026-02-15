@@ -5,6 +5,7 @@ import time
 import json
 import threading
 import os
+imort sys
 from io import BytesIO
 BOT_ACTIVE = True
 ADMIN_ID = 953030386
@@ -28,6 +29,11 @@ def start_bot(message):
     if message.from_user.id == ADMIN_ID:
         BOT_ACTIVE = True
         bot.reply_to(message, "✅ Bot ON ho gaya")
+        @bot.message_handler(commands=['kill'])
+def kill_bot(message):
+    if message.from_user.id == ADMIN_ID:
+        bot.reply_to(message, "💀 Server stopping...")
+        sys.exit()
 
 # Store user data
 user_sessions = {}
